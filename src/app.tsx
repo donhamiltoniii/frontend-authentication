@@ -1,7 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import PrivateRoute from './components/private-route/private-route.component';
 import SiteHeader from './components/site-header/site-header.component';
+
 import Dashboard from './pages/dashboard.page';
 import Home from './pages/home.page';
 
@@ -13,9 +15,9 @@ export default function App() {
       <div className="app">
         <SiteHeader />
         <Switch>
-          <Route path="/dashboard">
+          <PrivateRoute path="/dashboard">
             <Dashboard />
-          </Route>
+          </PrivateRoute>
           <Route path="/" exact={true}>
             <Home />
           </Route>
