@@ -14,16 +14,18 @@ const defaultValue: Auth0ContextProps = {
 export const Auth0Context = React.createContext(defaultValue);
 
 export function Auth0Provider({ children }: Auth0ProviderProps) {
-  const [auth0Client, setAuth0Client] = React.useState<Auth0Client>();
+  const [auth0Client, setAuth0Client] = React.useState<Auth0Client | null>(
+    null,
+  );
   const [isAuthenticated, setAuthenticated] = React.useState(false);
   const [isLoading, setLoading] = React.useState(true);
-  const [user, setUser] = React.useState();
+  const [user, setUser] = React.useState(null);
 
   const { REACT_APP_AUTH_DOMAIN, REACT_APP_AUTH_ID } = process.env;
 
   React.useEffect(() => {
     async function initializeAuth0() {
-      if (REACT_APP_AUTH_DOMAIN && REACT_APP_AUTH_ID) {
+      if (REACT_APP_AUTH_DOMAIN && REACT_APP_AUTH_ID && !user) {
         const auth0 = await createAuth0Client({
           client_id: REACT_APP_AUTH_ID,
           domain: REACT_APP_AUTH_DOMAIN,
@@ -42,7 +44,7 @@ export function Auth0Provider({ children }: Auth0ProviderProps) {
             alert(error);
           }
 
-          window.location.replace(window.location.pathname);
+          // window.location.replace(window.location.pathname);
         }
 
         const isAuthenticated = await auth0.isAuthenticated();
@@ -58,7 +60,7 @@ export function Auth0Provider({ children }: Auth0ProviderProps) {
     }
 
     initializeAuth0();
-  }, []);
+  }, [REACT_APP_AUTH_DOMAIN, REACT_APP_AUTH_ID, user]);
 
   return (
     <Auth0Context.Provider
