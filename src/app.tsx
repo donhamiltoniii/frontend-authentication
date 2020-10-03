@@ -5,15 +5,9 @@ import SiteHeader from './components/site-header/site-header.component';
 import Dashboard from './pages/dashboard.page';
 import Home from './pages/home.page';
 
-import { Auth0Context } from './contexts/auth0.context';
-
 import './app.scss';
 
 export default function App() {
-  const auth0 = React.useContext(Auth0Context);
-
-  console.log(auth0);
-
   return (
     <Router>
       <div className="app">
