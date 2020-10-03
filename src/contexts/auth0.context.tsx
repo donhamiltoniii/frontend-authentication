@@ -44,7 +44,7 @@ export function Auth0Provider({ children }: Auth0ProviderProps) {
             alert(error);
           }
 
-          // window.location.replace(window.location.pathname);
+          window.history.replaceState({}, document.title, '/');
         }
 
         const isAuthenticated = await auth0.isAuthenticated();
